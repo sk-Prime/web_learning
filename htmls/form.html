@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function getid(str){
+                return document.getElementById(str);
+            }
+            function createCookie(cookieName, cookieValue, daysToExpire){
+                var d = new Date();
+                d.setTime(d.getTime()+(daysToExpire*(24*60*60*1000))-(6*60*60*1000));
+                document.cookie = cookieName+"="+cookieValue+";"+"expires="+d.toUTCString()+";path=/";
+            }
+
+            function getCookie(cookiName){
+                var cookie = decodeURIComponent(document.cookie).split("; ");
+                for (var i=0; i<cookie.length; i++){
+                    var co = cookie[i].split("=");
+                    if (co[0]==cookiName){
+                        return co[1];
+                    }
+                }
+
+            }
+            function myfunc(a){
+                var name = document.getElementById("fname").value;
+                var col = document.getElementById("age").value;
+                var elem = document.getElementById("text");
+                elem.innerHTML = `hello ${name}`;
+                elem.style.color=col;
+                a.style.color = "white";
+                createCookie("color",col,2)
+            }
+            function dum() {
+                var cok = getCookie("color");
+                getid("text").style.color = cok;
+            }
+        </script>
+        <style>
+            .formfield {
+                display:grid;
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto;
+                row-gap: 10px;
+                column-gap:20px;
+            }
+            .inp{
+                width:95%;
+                
+            }
+            .lbl{
+                margin-top:auto;
+                margin-bottom: auto;
+            }
+            #text{
+                text-align: center;
+                font-size: 2em;
+                transform: translate(80px);
+            }
+            .sub {
+                grid-area:3/2;
+                width:200px;
+                margin:auto;
+                background-color: #00aa77;
+                border:none;
+                border-radius: 10px;
+                padding:10px;
+            }
+            .sub:hover {
+                transition: 0.3s;
+                background-color: #ff0044;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body onload="dum()">
+        <div id="mar"><h1>Greeting</h1></div>
+        <hr>
+        <div id="text">Hello</div>
+        <form class="formfield">
+            <label class="lbl" for="fname">Type your name:</label>
+            <input class="inp" type="text" id="fname">
+            <label class="lbl" for="age">Your color:</label>
+            <input class="inp" type="text" id="age">
+            <input class="sub" type="button" value="greet" onclick="myfunc(this)">
+
+        </form>
+    </body>
+</html>
